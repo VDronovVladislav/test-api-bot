@@ -1,0 +1,22 @@
+from pydantic import BaseModel
+from typing import List
+
+
+class QuantityByWhSchema(BaseModel):
+    """Схема для вложенной структуры данных quantity_by_wh."""
+    wh: int
+    quantity: int
+
+
+class QuantityBySizesSchema(BaseModel):
+    """Схема для вложенной структуры данных quantity_by_sizes."""
+    size: int
+    quantity_by_wh: List[QuantityByWhSchema]
+
+
+class ProductSchema(BaseModel):
+    """Схема для модели Product."""
+    nm_id: int
+    current_price: int
+    sum_quantity: int
+    quantity_by_sizes: List[QuantityBySizesSchema]
