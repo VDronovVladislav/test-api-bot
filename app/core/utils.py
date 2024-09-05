@@ -1,14 +1,12 @@
-import requests
-from pprint import pprint
+import asyncio
+from http import HTTPStatus
+
+import aiohttp
 
 
-import requests
 
-def get_main_product(product_id):
-    pass
-
-
-def get_product_data(product_id):
+async def get_product_data(product_id):
+    """Функция получения данных о товаре."""
     base_url = "https://card.wb.ru/cards/v2/detail"
     params = {
         "appType": 1,
@@ -16,18 +14,17 @@ def get_product_data(product_id):
         "dest": "123585476",
         "spp": 30,
         "ab_testing": "false",
-        "nm": ";".join(product_id)
+        "nm": product_id
     }
+    async with aiohttp.ClientSession() as session:
+        response = await session.get(base_url, params=params)
+        if response.status == HTTPStatus.OK:
+            return await response.json()
+        else:
+            response.raise_for_status()
 
-    response = requests.get(base_url, params=params)
 
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return None
-
-
-def parse_data(response):
+async def parse_data(response):
     product_data = response['data']['products'][0]
     sizes = product_data['sizes']
 
@@ -53,13 +50,8 @@ def parse_data(response):
     }
     return data
 
+# async def main():
+#     data = await get_product_data('166690984')
+#     print(data)
 
-
-# Пример
-product_id = ['212759490']
-data = parse_data(get_product_data(product_id))
-
-if data:
-    print(data)
-else:
-    print("Failed to retrieve data")
+# asyncio.run(main())

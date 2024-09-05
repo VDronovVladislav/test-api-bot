@@ -10,7 +10,7 @@ class QuantityByWhSchema(BaseModel):
 
 class QuantityBySizesSchema(BaseModel):
     """Схема для вложенной структуры данных quantity_by_sizes."""
-    size: int
+    size: str
     quantity_by_wh: List[QuantityByWhSchema]
 
 
@@ -20,3 +20,7 @@ class ProductSchema(BaseModel):
     current_price: int
     sum_quantity: int
     quantity_by_sizes: List[QuantityBySizesSchema]
+
+    class Config:
+        orm_mode = True
+        
