@@ -4,7 +4,6 @@ from http import HTTPStatus
 import aiohttp
 
 
-
 async def get_product_data(product_id):
     """Функция получения данных о товаре."""
     base_url = "https://card.wb.ru/cards/v2/detail"
@@ -24,7 +23,7 @@ async def get_product_data(product_id):
             response.raise_for_status()
 
 
-async def parse_data(response):
+def parse_data(response):
     product_data = response['data']['products'][0]
     sizes = product_data['sizes']
 
@@ -50,8 +49,7 @@ async def parse_data(response):
     }
     return data
 
-# async def main():
-#     data = await get_product_data('166690984')
-#     print(data)
 
-# asyncio.run(main())
+async def main_product_data(nm_id):
+    data = await get_product_data(nm_id)
+    return parse_data(data)

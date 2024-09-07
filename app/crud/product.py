@@ -26,8 +26,7 @@ async def create_product(
         session: AsyncSession
 ) -> Product:
     """CRUD-функция создания товара."""
-    new_product_data = new_product.dict()
-    db_product = Product(**new_product_data)
+    db_product = Product(**new_product)
     session.add(db_product)
     await session.commit()
     await session.refresh(db_product)

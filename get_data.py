@@ -22,9 +22,14 @@ def get_product_data(product_id):
     response = requests.get(base_url, params=params)
 
     if response.status_code == 200:
-        return response.json()
-    else:
-        return None
+        data = response.json()
+        if data['data']['products']:
+            print('данные есть')
+            #print(response.json())
+        #return response.json()
+        else:
+            print('Данных нет')
+            return None
 
 
 def parse_data(response):
@@ -56,7 +61,7 @@ def parse_data(response):
 
 
 # Пример
-product_id = ['212759490']
+product_id = ['209054252']
 data = parse_data(get_product_data(product_id))
 
 if data:
