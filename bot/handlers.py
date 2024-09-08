@@ -33,7 +33,9 @@ async def message_handler(message: Message) -> None:
     product_info = await get_product_info(nm_id)
     if product_info is True:
         db_product_info = await get_db_product_info(nm_id)
-        photo = get_image_url(int(nm_id))
+        # photo = get_image_url(int(nm_id))
+        photo = db_product_info['image_url']
+        print(photo)
         await message.answer_photo(photo=photo, caption=f'Фото товара {nm_id}')
         await message.answer(text=data_converter_for_bot(db_product_info))
     else:

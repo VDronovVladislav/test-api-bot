@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
 class QuantityByWhSchema(BaseModel):
@@ -19,6 +19,7 @@ class ProductSchema(BaseModel):
     nm_id: int
     current_price: int
     sum_quantity: int
+    image_url: Optional[str]
     quantity_by_sizes: List[QuantityBySizesSchema]
 
     class Config:

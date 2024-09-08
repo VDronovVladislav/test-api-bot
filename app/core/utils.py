@@ -2,6 +2,8 @@ from http import HTTPStatus
 
 import aiohttp
 
+from app.core.constants import BASKETS
+
 
 async def get_product_data(product_id):
     """Функция получения данных о товаре."""
@@ -20,6 +22,23 @@ async def get_product_data(product_id):
             return await response.json()
         else:
             response.raise_for_status()
+
+
+def get_image_url(nm_id: int):
+    part = nm_id // 1000
+    vol = part // 100
+    suffix = 'images/big/1.webp'
+    basket_url = BASKETS['default']
+
+    for basket_range, url in BASKETS.items():
+        if isinstance(basket_range, range) and vol in basket_range:
+            basket_url = url
+            break
+
+    image_url = (
+        f'{basket_url}/vol{str(vol)}/part{str(part)}/{str(nm_id)}/{suffix}'
+    )
+    return image_url
 
 
 def parse_data(response):
@@ -44,6 +63,7 @@ def parse_data(response):
         "nm_id": product_data['id'],
         "current_price": int(sizes[0]['price']['total'] / 100),
         "sum_quantity": product_data['totalQuantity'],
+        "image_url": get_image_url(product_data['id']),
         "quantity_by_sizes": quantity_by_sizes,
     }
     return data
