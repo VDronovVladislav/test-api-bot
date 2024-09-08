@@ -1,23 +1,3 @@
-from config import BASKETS
-
-
-def get_image_url(nm_id: int):
-    part = nm_id // 1000
-    vol = part // 100
-    suffix = 'images/big/1.webp'
-    basket_url = BASKETS['default']
-
-    for basket_range, url in BASKETS.items():
-        if isinstance(basket_range, range) and vol in basket_range:
-            basket_url = url
-            break
-
-    image_url = (
-        f'{basket_url}/vol{str(vol)}/part{str(part)}/{str(nm_id)}/{suffix}'
-    )
-    return image_url
-
-
 def data_converter_for_bot(response):
     """Отдает данные по товару в человекочитаемом виде."""
     sizes_info = []
