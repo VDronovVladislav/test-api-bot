@@ -2,7 +2,8 @@ from aiogram import Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-from api_client import get_product_info
+from api_client import get_product_info, get_db_product_info
+from utils import data_converter_for_bot, get_image_url
 
 
 dp = Dispatcher()
@@ -29,9 +30,12 @@ async def message_handler(message: Message) -> None:
         await message.answer('Отправьте ID в числовом формате!')
         return
 
-    product_info = await get_product_info(str(nm_id))
+    product_info = await get_product_info(nm_id)
     if product_info is True:
-        print('Все окей')
+        db_product_info = await get_db_product_info(nm_id)
+        photo = get_image_url(int(nm_id))
+        await message.answer_photo(photo=photo, caption=f'Фото товара {nm_id}')
+        await message.answer(text=data_converter_for_bot(db_product_info))
     else:
         await message.answer(
                 f'Товара с таким ID: {nm_id} - не существует!'
