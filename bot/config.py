@@ -12,4 +12,4 @@ PARAMS = {
         "spp": 30,
         "ab_testing": "false",
     }
-API_URL = 'http://127.0.0.1:8000/product'
+API_URL = 'http://app:8000/product'

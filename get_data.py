@@ -59,7 +59,6 @@ def parse_data(response):
     return data
 
 
-
 # Пример
 product_id = ['209054252']
 data = parse_data(get_product_data(product_id))
