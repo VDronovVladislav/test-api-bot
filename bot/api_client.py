@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Any
 import aiohttp
 
 from config import BASE_URL, PARAMS, API_URL
@@ -18,7 +18,7 @@ async def get_product_info(nm_id: str) -> bool:
             response.raise_for_status()
 
 
-async def get_db_product_info(nm_id: str) -> Dict[str, Any]:
+async def get_db_product_info(nm_id: str) -> dict[str, Any]:
     """Функция получения информации о товаре из БД."""
     async with aiohttp.ClientSession() as session:
         api_url = f"{API_URL}/{nm_id}"

@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Any
 
 import aiohttp
 
@@ -24,7 +25,8 @@ async def get_product_data(product_id):
             response.raise_for_status()
 
 
-def get_image_url(nm_id: int):
+def get_image_url(nm_id: int) -> str:
+    """Функция, формирующая url для картинки товара."""
     part = nm_id // 1000
     vol = part // 100
     suffix = 'images/big/1.webp'
@@ -41,7 +43,8 @@ def get_image_url(nm_id: int):
     return image_url
 
 
-def parse_data(response):
+def parse_data(response) -> dict[str, Any]:
+    """Функция, отдающая словарь значений."""
     product_data = response['data']['products'][0]
     sizes = product_data['sizes']
 

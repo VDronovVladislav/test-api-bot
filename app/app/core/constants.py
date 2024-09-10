@@ -1,3 +1,5 @@
+# Константа со словарем url для баскетов.
+
 BASKETS = {
     range(0, 144): "https://basket-01.wbbasket.ru",
     range(144, 288): "https://basket-02.wbbasket.ru",
